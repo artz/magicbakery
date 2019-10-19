@@ -1,6 +1,7 @@
 body {
-    font: 20px 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font: 21px 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     text-align: center;
+    margin: 50px;
 }
 h1 {
     display: inline-block;
@@ -10,5 +11,12 @@ h1 {
     height: 400px;
     overflow: hidden;
     text-indent: -99em;
-    margin-bottom: 0;
+}
+h2 {
+    font-size: 34px;
+    font-weight: normal;
+}
+h3 {
+    font-size: 22px;
+    font-weight: normal;
 }
