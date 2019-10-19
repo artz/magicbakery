@@ -1,0 +1,14 @@
+body {
+    font: 20px 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: center;
+}
+h1 {
+    display: inline-block;
+    background: url('/images/magicbakery-logo.gif') no-repeat center center;
+    background-size: cover;
+    width: 400px;
+    height: 400px;
+    overflow: hidden;
+    text-indent: -99em;
+    margin-bottom: 0;
+}
