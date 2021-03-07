@@ -20,3 +20,31 @@ h3 {
     font-size: 22px;
     font-weight: normal;
 }
+.product {
+    vertical-align: top;
+    display: inline-block;
+    width: 200px;
+}
+.total {
+    font-size: 34px;
+}
+.quantity {
+    display: inline-flex;
+    font-size: 24px;
+    line-height: 36px;
+}
+.quantity > button {
+    cursor: pointer;
+    font-size: 24px;
+    width: 36px;
+    color: white;
+    background-color: rgb(33, 117, 196);
+}
+.quantity > span {
+    width: 36px;
+}
+#paypal-buttons {
+    margin-top: 24px;
+    display: inline-block;
+    width: 340px;
+}
