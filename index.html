@@ -1,95 +1,51 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Magic Bakery</title>
+    <meta
+      name="description"
+      content="The Magic Bakery has deliciously magical gluten free and vegan cookies and other baked goods."
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:title" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="" />
+    <meta property="og:image" content="" />
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="apple-touch-icon" href="img/magicbakery-logo.gif" />
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/magicbakery.css" />
+  </head>
+  <body>
+    <h1>Magic Bakery</h1>
+    <h2>Welcome to your Magic Bakery</h2>
+    <h3>Where delicious baked homemade goods are always gluten free.</h3>
 
-<head>
-<meta charset="utf-8">
-<title>Magic Bakery</title>
-<link rel="stylesheet" href="styles/magicbakery.css">
-<meta name="description" content="The Magic Bakery has deliciously magical gluten free and vegan cookies and other baked goods.">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="apple-touch-icon" href="images/magicbakery-logo.gif">
-<link rel="icon" type="image/gif" href="images/magicbakery-logo.gif">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
+    <section class="product">
+      <h3>Mystical Macadamia</h3>
+      <p>Delicious, moist.</p>
+    </section>
+    <section class="product">
+      <h3>Great Garbanzo</h3>
+      <p>Just like a cookie.</p>
+    </section>
+    <section class="product">
+      <h3>Charming Cassava</h3>
+      <p>Amazing.</p>
+    </section>
+    <section class="product">
+      <h3>Peanutbutter Pixie</h3>
+      <p>Everyone is in love with it.</p>
+    </section>
 
-<body>
-<h1>Magic Bakery</h1>
-<h2>Welcome to your Magic Bakery</h2>
-<h3>Where delicious baked homemade goods are always gluten free.</h3>
+    <div class="total">Total: <b>$0</b></div>
 
-<section class="product">
-    <h3>Mystical Macadamia</h3>
-    <p>Delicious, moist.</p>
-</section>
-<section class="product">
-    <h3>Great Garbanzo</h3>
-    <p>Just like a cookie.</p>
-</section>
-<section class="product">
-    <h3>Charming Cassava</h3>
-    <p>Amazing.</p>
-</section>
-<section class="product">
-    <h3>Peanutbutter Pixie</h3>
-    <p>Everyone is in love with it.</p>
-</section>
-
-<div class="total">Total: <b>$0</b></div>
-
-<div id="paypal-buttons"></div>
-<script src="dist/js/vendor/jquery-3.4.1.min.js"></script>
-<script src="dist/js/plugins.js"></script>
-<script src="https://www.paypal.com/sdk/js?client-id=AU5Yv72ADYBOlZiUiENqHL1BtmF0IzkKeckUtN-RevNzmC_rMKKpLXPfrXs_-DG9fhwMoIN3kPhEWCQo&currency=USD&disable-funding=credit"></script>
-<script>
-const $total = $('.total > b')
-let value = 0
-$paypal = $('#paypal-buttons').hide()
-$products = $('section.product')
-$products.magicQuantity().on('total', (evt, total) => {
-    value = total * 2
-    $total.text(`$${ value }`)
-    if (value) {
-        $paypal.fadeIn()
-    } else {
-        $paypal.fadeOut()
-    }
-})
-
-function getDescription() {
-    let description = []
-    $products.each((i, el) => {
-        const $product = $(el)
-        const quantity = parseInt($product.find('.quantity > span').text())
-        if (quantity) {
-            description.push(`${ quantity } ${ $product.find('h3').text() }`)
-        }
-    })
-    return description.join(', ')
-}
-
-paypal.Buttons({
-    style: {
-        shape: 'rect',
-        color: 'blue',
-        layout: 'vertical',
-        label: 'pay',
-    },
-    createOrder: function (data, actions) {
-        return actions.order.create({
-            purchase_units: [{
-                description: getDescription(),
-                amount: { value }
-            }]
-        });
-    },
-    onApprove: function (data, actions) {
-        return actions.order.capture().then(function (details) {
-            alert('Transaction completed by ' + details.payer.name.given_name + '!');
-        });
-    }
-}).render('#paypal-buttons');
-</script>
-</body>
-
+    <div id="paypal-buttons"></div>
+    <script src="https://www.paypal.com/sdk/js?client-id=AU5Yv72ADYBOlZiUiENqHL1BtmF0IzkKeckUtN-RevNzmC_rMKKpLXPfrXs_-DG9fhwMoIN3kPhEWCQo&currency=USD&disable-funding=credit"></script>
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/js/plugins.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
 </html>
