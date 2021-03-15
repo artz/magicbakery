@@ -45,34 +45,51 @@ import jquery from "jquery";
 window.$ = window.jQuery = jquery;
 (function ($) {
   $.fn.magicQuantity = function () {
-    let total = 0;
-    return this.each((i, el) => {
-      let count = 0;
+    const $elems = this;
+    function calculateTotal() {
+      let total = 0;
+      $elems.each((i, elem) => {
+        total += parseInt(elem.value) * elem.getAttribute("data-price");
+      });
+      return total;
+    }
+    return $elems.each((i, el) => {
       const $el = $(el);
-      const $div = $('<div class="quantity"></div>');
-      const $add = $("<button>+</button>");
-      const $subtract = $("<button>-</button>");
-      const $quantity = $("<span>0</span>");
+      const $div = $('<div class="magic-quantity"></div>');
+      const $controls = $('<div class="controls"></div>');
+      const $add = $('<button class="add">+</button>');
+      const $subtract = $('<button class="subtract">-</button>');
+      const price = parseInt($el.data("price"));
+      const $price = $(`<div class="price">$${price} each</div>`);
 
-      $el.click(() => {
-        $quantity.text(count);
-        $el.trigger("total", total);
+      $add.on("click", () => {
+        $el.val(parseInt($el.val()) + 1);
+        $subtract.prop("disabled", false);
+        $el.trigger("total", calculateTotal());
       });
-      $add.click(() => {
-        count += 1;
-        total += 1;
-      });
-      $subtract.click(() => {
-        if (count > 0) {
-          count -= 1;
-          total -= 1;
+
+      $subtract.on("click", () => {
+        const value = parseInt($el.val());
+        if (value > 0) {
+          $el.val(value - 1);
         }
+        $subtract.prop("disabled", parseInt($el.val()) === 0);
+        $el.trigger("total", calculateTotal());
       });
 
-      $div.append($subtract);
-      $div.append($quantity);
-      $div.append($add);
-      $el.append($div);
+      el.addEventListener("keyup", () => {
+        $el.trigger("total", calculateTotal());
+      });
+      el.addEventListener("blur", () => {
+        $el.trigger("total", calculateTotal());
+      });
+
+      $el.replaceWith($div);
+      $controls.append($subtract);
+      $controls.append($el);
+      $controls.append($add);
+      $div.append($controls);
+      $div.append($price);
     });
   };
 })(jQuery);

@@ -2,50 +2,137 @@ body {
   font: 21px "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
   text-align: center;
-  margin: 50px;
+}
+footer {
+  margin-top: 144px;
 }
 h1 {
   display: inline-block;
   background: url("/img/magicbakery-logo.gif") no-repeat center center;
   background-size: cover;
-  width: 400px;
-  height: 400px;
+  width: 240px;
+  height: 240px;
   overflow: hidden;
   text-indent: -99em;
+  margin-bottom: 0;
 }
 h2 {
-  font-size: 34px;
+  font-size: 36px;
+  font-weight: bold;
   font-weight: normal;
 }
 h3 {
-  font-size: 22px;
-  font-weight: normal;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+form {
+  margin: 0 auto;
+  display: inline-block;
 }
 .product {
-  vertical-align: top;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  padding: 30px;
+}
+.photo > img {
   width: 200px;
+  height: 200px;
+  border-radius: 10px;
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
+}
+.description {
+  width: 400px;
+  text-align: left;
 }
 .total {
   font-size: 34px;
 }
 .quantity {
-  display: inline-flex;
-  font-size: 24px;
-  line-height: 36px;
+  padding: 36px;
+  width: 300px;
 }
-.quantity > button {
+
+div.magic-quantity > .controls {
+  display: inline-flex;
+}
+div.magic-quantity > .controls > button {
   cursor: pointer;
   font-size: 24px;
-  width: 36px;
+  line-height: 48px;
+  height: 48px;
+  width: 48px;
   color: white;
   background-color: rgb(33, 117, 196);
+  border: 2px solid rgb(33, 117, 196);
+  border-radius: 0 4px 4px 0;
+  padding: 0;
 }
-.quantity > span {
-  width: 36px;
+div.magic-quantity > .controls > button.add {
+  border-left: 0;
 }
+div.magic-quantity > .controls > button.subtract {
+  border-right: 0;
+  border-radius: 4px 0 0 4px;
+}
+input.magic-quantity {
+  font-size: 24px;
+  line-height: 44px;
+  height: 44px;
+  width: 60px;
+  border-top: 2px solid rgb(33, 117, 196);
+  border-bottom: 2px solid rgb(33, 117, 196);
+  border-right: 0;
+  border-left: 0;
+  text-align: center;
+  padding: 0;
+}
+div.magic-quantity > .price {
+  margin-top: 12px;
+}
+
+.payment {
+  margin-top: 24px;
+  display: inline-block;
+  width: 360px;
+  text-align: left;
+}
+
+.delivery {
+  display: block;
+  margin-top: 12px;
+}
+.delivery > b {
+  font-size: 16px;
+  margin-bottom: 4px;
+  display: block;
+}
+.delivery input {
+  font-size: 24px;
+  line-height: 44px;
+  height: 44px;
+  text-align: center;
+  border: 2px solid rgb(33, 117, 196);
+  border-radius: 4px;
+  width: 200px;
+}
+
 #paypal-buttons {
   margin-top: 24px;
   display: inline-block;
-  width: 340px;
+  width: 360px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }

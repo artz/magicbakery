@@ -1,30 +1,94 @@
 (function ($) {
   const $total = $(".total > b");
-  let value = 0;
-  const $paypal = $("#paypal-buttons").hide();
-  const $products = $("section.product");
-  $products.magicQuantity().on("total", (evt, total) => {
-    value = total * 2;
-    $total.text(`$${value}`);
-    if (value) {
-      $paypal.fadeIn();
-    } else {
-      $paypal.fadeOut();
-    }
+  const $inputs = $("input.magic-quantity");
+  const $payment = $(".payment").hide();
+  const $products = $(".product");
+
+  // Delivery date
+  const $delivery = $(".delivery input");
+  const deliveryDate = new Date();
+  deliveryDate.setDate(new Date().getDate() + 2);
+  const padZero = (number) => {
+    return number > 9 ? number : "0" + number;
+  };
+  const minDate = `${deliveryDate.getFullYear()}-${padZero(
+    deliveryDate.getMonth()
+  )}-${padZero(deliveryDate.getDate())}`;
+  $delivery.val(minDate);
+  $delivery.attr("min", minDate);
+
+  $("form").on("submit", (event) => {
+    event.preventDefault();
   });
 
-  function getDescription() {
-    let description = [];
-    $products.each((i, el) => {
-      const $product = $(el);
-      const quantity = parseInt($product.find(".quantity > span").text());
-      if (quantity) {
-        description.push(`${quantity} ${$product.find("h3").text()}`);
-      }
-    });
-    return description.join(", ");
+  let value = 0;
+
+  $inputs.magicQuantity().on("total", (evt, total) => {
+    $total.text(`$${total}`);
+    if (total) {
+      $payment.fadeIn();
+    } else {
+      $payment.fadeOut();
+    }
+    value = total;
+  });
+
+  function getDeliveryDate() {
+    const date = new Date($delivery.val());
+    return date.toLocaleDateString();
   }
 
+  function getPurchaseUnits() {
+    let items = [];
+    let total = 0;
+    const currency_code = "USD";
+    $products.each((i, el) => {
+      const $product = $(el);
+      const $input = $product.find("input");
+      const quantity = parseInt($input.val());
+      const price = parseInt($input.data("price"));
+      const name = $product.find("h3").text();
+      if (quantity) {
+        total += quantity * price;
+        items.push({
+          name,
+          quantity,
+          unit_amount: {
+            currency_code,
+            value: price,
+          },
+        });
+      }
+    });
+    items.push({
+      name: `Delivery: ${getDeliveryDate()}`,
+      quantity: 1,
+      unit_amount: {
+        currency_code,
+        value: 0,
+      },
+    });
+    const purchaseUnits = [
+      {
+        description: `Order for ${getDeliveryDate()}`,
+        amount: {
+          currency_code,
+          value: total,
+          breakdown: {
+            item_total: {
+              currency_code,
+              value: total,
+            },
+          },
+        },
+        items,
+      },
+    ];
+    console.log(purchaseUnits);
+    return purchaseUnits;
+  }
+
+  // https://developer.paypal.com/docs/api/orders/v2/
   paypal
     .Buttons({
       style: {
@@ -35,12 +99,7 @@
       },
       createOrder: function (data, actions) {
         return actions.order.create({
-          purchase_units: [
-            {
-              description: getDescription(),
-              amount: { value },
-            },
-          ],
+          purchase_units: getPurchaseUnits(),
         });
       },
       onApprove: function (data, actions) {
